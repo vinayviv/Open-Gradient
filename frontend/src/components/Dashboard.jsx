@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, Activity, Fingerprint, Lock, Zap, Clock, AlertTriangle, CheckCircle, Database } from 'lucide-react';
-import { analyzeTransaction } from '../services/api';
+import { analyzeTransaction, getActivities, saveActivities } from '../services/api';
 
 const Dashboard = () => {
     const [txData, setTxData] = useState({
@@ -14,10 +14,11 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState('Dashboard');
     const [walletConnected, setWalletConnected] = useState(false);
-    const [activities, setActivities] = useState([
-        { id: 1, type: 'safe', msg: 'Tx 0x2A...f9A approved', time: '1m ago' },
-        { id: 2, type: 'warn', msg: 'New contract interaction (DeX)', time: '3m ago' }
-    ]);
+    const [activities, setActivities] = useState(() => getActivities());
+
+    useEffect(() => {
+        saveActivities(activities);
+    }, [activities]);
 
     const handleInputChange = (e) => {
         setTxData({

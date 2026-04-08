@@ -8,9 +8,6 @@ Push-Location "frontend"
 Write-Host "Checking dependencies..." -ForegroundColor Yellow
 npm install
 
-Write-Host "Starting Node.js Backend Server on port 8000..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "node --watch backend/server.js"
-
 Write-Host "Starting Frontend Vite Development server..." -ForegroundColor Green
 # Start Vite and wait
 npm run dev
